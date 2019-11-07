@@ -327,10 +327,14 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     }
 
     private var defaultInsets: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaInsets
+        if UIDevice.current.orientation.isLandscape {
+            return .zero
         } else {
-            return UIEdgeInsets(top: statusBarHidden ? 0.0 : 20.0, left: 0.0, bottom: 0.0, right: 0.0)
+            if #available(iOS 11.0, *) {
+                return view.safeAreaInsets
+            } else {
+                return UIEdgeInsets(top: statusBarHidden ? 0.0 : 20.0, left: 0.0, bottom: 0.0, right: 0.0)
+            }
         }
     }
 
@@ -417,10 +421,15 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     }
 
     fileprivate func layoutScrubber() {
-
-        scrubber.bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: self.view.bounds.width, height: 40))
-        scrubber.center = self.view.boundsCenter
-        scrubber.frame.origin.y = (footerView?.frame.origin.y ?? self.view.bounds.maxY) - scrubber.bounds.height
+        if UIDevice.current.orientation.isLandscape {
+            scrubber.bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: self.view.bounds.width - 40, height: 40))
+            scrubber.center = self.view.boundsCenter
+            scrubber.frame.origin.y = self.view.bounds.maxY - scrubber.bounds.height
+        } else {
+            scrubber.bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: self.view.bounds.width, height: 40))
+            scrubber.center = self.view.boundsCenter
+            scrubber.frame.origin.y = (footerView?.frame.origin.y ?? self.view.bounds.maxY) - scrubber.bounds.height
+        }
     }
 
     @objc fileprivate func deleteItem() {
