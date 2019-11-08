@@ -22,6 +22,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     fileprivate var thumbnailsButton: UIButton? = UIButton.thumbnailsButton()
     fileprivate var deleteButton: UIButton? = UIButton.deleteButton()
     fileprivate let scrubber = VideoScrubber()
+    fileprivate let moreButton = UIButton.moreButton()
 
     fileprivate weak var initialItemController: ItemController?
 
@@ -239,6 +240,13 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self.view.addSubview(deleteButton)
         }
     }
+    
+    fileprivate func configureMoreButton() {
+        moreButton.addTarget(self, action: #selector(GalleryViewController.moreAction), for: .touchUpInside)
+        moreButton.alpha = 0
+        self.view.addSubview(moreButton)
+        moreButton.isHidden = !(initialItemController is ImageViewController)
+    }
 
     fileprivate func configureScrubber() {
 
@@ -260,6 +268,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         configureCloseButton()
         configureThumbnailsButton()
         configureDeleteButton()
+        configureMoreButton()
         configureScrubber()
 
         self.view.clipsToBounds = false
@@ -321,6 +330,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         layoutButton(closeButton, layout: closeLayout)
         layoutButton(thumbnailsButton, layout: thumbnailsLayout)
         layoutButton(deleteButton, layout: deleteLayout)
+        layoutButton(moreButton, layout: .pinRight(10, 10))
         layoutHeaderView()
         layoutFooterView()
         layoutScrubber()
@@ -444,6 +454,12 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self?.deleteButton?.isEnabled = true
             self?.view.isUserInteractionEnabled = true
         }
+    }
+    
+    @objc fileprivate func moreAction() {
+        guard let vc = self.viewControllers?.first else { return }
+        guard let itemController = vc as? ItemBaseController<UIImageView> else { return }
+        itemControllerDidLongPress(itemController, in: itemController.itemView)
     }
 
     //ThumbnailsimageBlock
@@ -577,6 +593,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self?.closeButton?.alpha = 0.0
             self?.thumbnailsButton?.alpha = 0.0
             self?.deleteButton?.alpha = 0.0
+            self?.moreButton.alpha = 0.0
             self?.scrubber.alpha = 0.0
 
             }, completion: { [weak self] done in
@@ -621,6 +638,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self?.closeButton?.alpha = targetAlpha
             self?.thumbnailsButton?.alpha = targetAlpha
             self?.deleteButton?.alpha = targetAlpha
+            self?.moreButton.alpha = targetAlpha
 
             if let _ = self?.viewControllers?.first as? VideoViewController {
 
@@ -670,6 +688,8 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
                 })
             }
         }
+        
+        moreButton.isHidden = !(controller is ImageViewController)
     }
 
     open func itemControllerDidSingleTap(_ controller: ItemController) {
@@ -704,6 +724,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             closeButton?.alpha = alpha
             thumbnailsButton?.alpha = alpha
             deleteButton?.alpha = alpha
+            moreButton.alpha = alpha
             headerView?.alpha = alpha
             footerView?.alpha = alpha
 

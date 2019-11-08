@@ -113,4 +113,39 @@ extension CAShapeLayer {
 
         return container
     }
+    
+    static func moreShape() -> CAShapeLayer {
+        let edgeLength: CGFloat = 7
+        let borderWidth: CGFloat = 0.5
+        
+        let rect = CGRect(x: 0.0, y: 0.0, width: edgeLength - (borderWidth * 2), height: edgeLength - (borderWidth * 2))
+        let circle = UIBezierPath(ovalIn: rect)
+        
+        let container = CAShapeLayer()
+        container.bounds.size = CGSize(width: edgeLength * 2 + 3, height: edgeLength)
+        container.frame.origin = CGPoint.zero
+
+        let elementFirst = CAShapeLayer()
+        elementFirst.bounds.size = CGSize(width: edgeLength, height: edgeLength)
+        elementFirst.position = CGPoint(x: container.bounds.minX + (edgeLength / 2) + borderWidth, y: container.bounds.midY + borderWidth)
+        elementFirst.lineCap = CAShapeLayerLineCap.round
+        elementFirst.path = circle.cgPath
+        elementFirst.strokeColor = UIColor.darkGray.cgColor
+        elementFirst.lineWidth = borderWidth
+        elementFirst.fillColor = UIColor.white.cgColor
+        
+        let elementSecond = CAShapeLayer()
+        elementSecond.bounds.size = CGSize(width: edgeLength, height: edgeLength)
+        elementSecond.position = CGPoint(x: container.bounds.maxX - (CGFloat(edgeLength) / 2), y: container.bounds.midY + borderWidth)
+        elementSecond.lineCap = CAShapeLayerLineCap.round
+        elementSecond.path = circle.cgPath
+        elementSecond.strokeColor = UIColor.darkGray.cgColor
+        elementSecond.lineWidth = borderWidth
+        elementSecond.fillColor = UIColor.white.cgColor
+        
+        container.addSublayer(elementFirst)
+        container.addSublayer(elementSecond)
+
+        return container
+    }
 }

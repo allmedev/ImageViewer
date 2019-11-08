@@ -93,7 +93,7 @@ extension UIButton {
     static func closeButton() -> UIButton {
 
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 50)))
-        button.setImage(CAShapeLayer.closeShape(edgeLength: 15).toImage(), for: .normal)
+        button.setImage(CAShapeLayer.closeShape(edgeLength: 10).toImage(), for: .normal)
 
         return button
     }
@@ -111,6 +111,15 @@ extension UIButton {
 
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 50)))
         button.setTitle("Delete", for: .normal)
+
+        return button
+    }
+    
+    static func moreButton() -> UIButton {
+
+        let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 50)))
+        button.contentMode = .center
+        button.setImage(CAShapeLayer.moreShape().toImage(), for: .normal)
 
         return button
     }
