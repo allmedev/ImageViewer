@@ -330,7 +330,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         layoutButton(closeButton, layout: closeLayout)
         layoutButton(thumbnailsButton, layout: thumbnailsLayout)
         layoutButton(deleteButton, layout: deleteLayout)
-        layoutButton(moreButton, layout: .pinRight(10, 10))
+        layoutButton(moreButton, layout: .pinRight(15, 0))
         layoutHeaderView()
         layoutFooterView()
         layoutScrubber()

@@ -115,7 +115,7 @@ extension CAShapeLayer {
     }
     
     static func moreShape() -> CAShapeLayer {
-        let edgeLength: CGFloat = 7
+        let edgeLength: CGFloat = 6
         let borderWidth: CGFloat = 0.5
         
         let rect = CGRect(x: 0.0, y: 0.0, width: edgeLength - (borderWidth * 2), height: edgeLength - (borderWidth * 2))
