@@ -273,6 +273,16 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
 
         self.view.clipsToBounds = false
     }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        UIApplication.shared.isStatusBarHidden = true
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        UIApplication.shared.isStatusBarHidden = false
+    }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
