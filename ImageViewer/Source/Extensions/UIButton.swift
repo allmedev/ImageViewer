@@ -120,7 +120,8 @@ extension UIButton {
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 50)))
         button.contentMode = .center
         button.setImage(CAShapeLayer.moreShape().toImage(), for: .normal)
-
+        button.isAccessibilityElement = true
+        button.accessibilityIdentifier = "navigation bar menu"
         return button
     }
 }
