@@ -121,7 +121,7 @@ extension UIButton {
         button.contentMode = .center
         button.setImage(CAShapeLayer.moreShape().toImage(), for: .normal)
         button.isAccessibilityElement = true
-        button.accessibilityIdentifier = "navigation bar menu"
+        button.accessibilityIdentifier = "imageViewActionMenu"
         return button
     }
 }
