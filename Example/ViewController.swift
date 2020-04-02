@@ -54,11 +54,10 @@ class ViewController: UIViewController {
                                                   itemCount: itemCount,
                                                   fetchImageBlock: myFetchImageBlock,
                                                   configuration: configuration,
-                                                  isInitialController: isInitialController,
-                                                  saveActionBlock: nil)
+                                                  isInitialController: isInitialController)
                 }
 
-                galleryItem = GalleryItem.custom(fetchImageBlock: myFetchImageBlock, itemViewControllerBlock: itemViewControllerBlock, saveActionBlock: {})
+                galleryItem = GalleryItem.custom(fetchImageBlock: myFetchImageBlock, itemViewControllerBlock: itemViewControllerBlock)
 
             default:
 

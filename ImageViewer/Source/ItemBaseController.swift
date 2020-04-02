@@ -9,11 +9,14 @@
 import UIKit
 
 public protocol ItemView {
-
     var image: UIImage? { get set }
 }
 
-open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGestureRecognizerDelegate, UIScrollViewDelegate where T: ItemView {
+protocol SaveActionable {
+    var saveActionBlock: (() -> Void)? { get }
+}
+
+open class ItemBaseController<T: UIView>: UIViewController, ItemController, SaveActionable, UIGestureRecognizerDelegate, UIScrollViewDelegate where T: ItemView {
 
     //UI
     public var itemView = T()
@@ -63,7 +66,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
     // MARK: - Initializers
 
-    public init(index: Int, itemCount: Int, fetchImageBlock: @escaping FetchImageBlock, configuration: GalleryConfiguration, isInitialController: Bool = false, saveActionBlock: (() -> Void)?) {
+    public init(index: Int, itemCount: Int, fetchImageBlock: @escaping FetchImageBlock, configuration: GalleryConfiguration, isInitialController: Bool = false, saveActionBlock: (() -> Void)? = nil) {
 
         self.index = index
         self.itemCount = itemCount

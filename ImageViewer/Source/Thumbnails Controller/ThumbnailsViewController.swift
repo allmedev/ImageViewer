@@ -126,7 +126,7 @@ class ThumbnailsViewController: UICollectionViewController, UICollectionViewDele
                 }
             }
 
-        case .custom(let fetchImageBlock, _, _):
+        case .custom(let fetchImageBlock, _):
 
             fetchImageBlock() { image in
 

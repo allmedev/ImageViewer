@@ -470,11 +470,13 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     
     @objc fileprivate func moreAction() {
         guard let vc = self.viewControllers?.first else { return }
-        guard let itemController = vc as? ItemBaseController<UIImageView> else { return }
-        if itemController.saveActionBlock != nil {
+        if let itemController = vc as? SaveActionable, itemController.saveActionBlock != nil {
             itemController.saveActionBlock?()
-        } else {
+            return
+        }
+        if let itemController = vc as? ItemBaseController<UIImageView> {
             itemControllerDidLongPress(itemController, in: itemController.itemView)
+            return
         }
     }
 
