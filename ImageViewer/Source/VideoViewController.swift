@@ -45,7 +45,12 @@ class VideoViewController: ItemBaseController<VideoView> {
             }
         }
 
-        super.init(index: index, itemCount: itemCount, fetchImageBlock: fetchImageBlock, configuration: configuration, isInitialController: isInitialController)
+        super.init(index: index,
+                   itemCount: itemCount,
+                   fetchImageBlock: fetchImageBlock,
+                   configuration: configuration,
+                   isInitialController: isInitialController,
+                   saveActionBlock: nil)
     }
 
     override func viewDidLoad() {

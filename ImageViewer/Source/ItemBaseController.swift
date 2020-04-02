@@ -19,6 +19,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
     public var itemView = T()
     let scrollView = UIScrollView()
     let activityIndicatorView = UIActivityIndicatorView(style: .white)
+    let saveActionBlock: (() -> Void)?
 
     //DELEGATE / DATASOURCE
     weak public var delegate:                 ItemControllerDelegate?
@@ -62,12 +63,13 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
     // MARK: - Initializers
 
-    public init(index: Int, itemCount: Int, fetchImageBlock: @escaping FetchImageBlock, configuration: GalleryConfiguration, isInitialController: Bool = false) {
+    public init(index: Int, itemCount: Int, fetchImageBlock: @escaping FetchImageBlock, configuration: GalleryConfiguration, isInitialController: Bool = false, saveActionBlock: (() -> Void)?) {
 
         self.index = index
         self.itemCount = itemCount
         self.isInitialController = isInitialController
         self.fetchImageBlock = fetchImageBlock
+        self.saveActionBlock = saveActionBlock
 
         for item in configuration {
 

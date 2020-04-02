@@ -79,7 +79,12 @@ final class GalleryPagingDataSource: NSObject, UIPageViewControllerDataSource {
 
         case .image(let fetchImageBlock):
 
-            let imageController = ImageViewController(index: itemIndex, itemCount: itemsDataSource.itemCount(), fetchImageBlock: fetchImageBlock, configuration: configuration, isInitialController: isInitial)
+            let imageController = ImageViewController(index: itemIndex,
+                                                      itemCount: itemsDataSource.itemCount(),
+                                                      fetchImageBlock: fetchImageBlock,
+                                                      configuration: configuration,
+                                                      isInitialController: isInitial,
+                                                      saveActionBlock: nil)
             imageController.delegate = itemControllerDelegate
             imageController.displacedViewsDataSource = displacedViewsDataSource
 
@@ -87,14 +92,19 @@ final class GalleryPagingDataSource: NSObject, UIPageViewControllerDataSource {
 
         case .video(let fetchImageBlock, let videoURL):
 
-            let videoController = VideoViewController(index: itemIndex, itemCount: itemsDataSource.itemCount(), fetchImageBlock: fetchImageBlock, videoURL: videoURL, scrubber: scrubber, configuration: configuration, isInitialController: isInitial)
-
+            let videoController = VideoViewController(index: itemIndex,
+                                                      itemCount: itemsDataSource.itemCount(),
+                                                      fetchImageBlock: fetchImageBlock,
+                                                      videoURL: videoURL,
+                                                      scrubber: scrubber,
+                                                      configuration: configuration,
+                                                      isInitialController: isInitial)
             videoController.delegate = itemControllerDelegate
             videoController.displacedViewsDataSource = displacedViewsDataSource
 
             return videoController
 
-        case .custom(let fetchImageBlock, let itemViewControllerBlock):
+        case .custom(let fetchImageBlock, let itemViewControllerBlock, _):
 
             guard let itemController = itemViewControllerBlock(itemIndex, itemsDataSource.itemCount(), fetchImageBlock, configuration, isInitial) as? ItemController, let vc = itemController as? UIViewController else { return UIViewController() }
 

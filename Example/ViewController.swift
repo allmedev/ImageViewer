@@ -50,10 +50,15 @@ class ViewController: UIViewController {
 
                 let itemViewControllerBlock: ItemViewControllerBlock = { index, itemCount, fetchImageBlock, configuration, isInitialController in
 
-                    return AnimatedViewController(index: index, itemCount: itemCount, fetchImageBlock: myFetchImageBlock, configuration: configuration, isInitialController: isInitialController)
+                    return AnimatedViewController(index: index,
+                                                  itemCount: itemCount,
+                                                  fetchImageBlock: myFetchImageBlock,
+                                                  configuration: configuration,
+                                                  isInitialController: isInitialController,
+                                                  saveActionBlock: nil)
                 }
 
-                galleryItem = GalleryItem.custom(fetchImageBlock: myFetchImageBlock, itemViewControllerBlock: itemViewControllerBlock)
+                galleryItem = GalleryItem.custom(fetchImageBlock: myFetchImageBlock, itemViewControllerBlock: itemViewControllerBlock, saveActionBlock: {})
 
             default:
 

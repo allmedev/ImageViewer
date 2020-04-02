@@ -16,5 +16,5 @@ public enum GalleryItem {
 
     case image(fetchImageBlock: FetchImageBlock)
     case video(fetchPreviewImageBlock: FetchImageBlock, videoURL: URL)
-    case custom(fetchImageBlock: FetchImageBlock, itemViewControllerBlock: ItemViewControllerBlock)
+    case custom(fetchImageBlock: FetchImageBlock, itemViewControllerBlock: ItemViewControllerBlock, saveActionBlock: () -> Void)
 }

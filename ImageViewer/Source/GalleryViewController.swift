@@ -245,7 +245,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         moreButton.addTarget(self, action: #selector(GalleryViewController.moreAction), for: .touchUpInside)
         moreButton.alpha = 0
         self.view.addSubview(moreButton)
-        moreButton.isHidden = !(initialItemController is ImageViewController)
+        moreButton.isHidden = false //!(initialItemController is ImageViewController)
     }
 
     fileprivate func configureScrubber() {
@@ -471,7 +471,11 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     @objc fileprivate func moreAction() {
         guard let vc = self.viewControllers?.first else { return }
         guard let itemController = vc as? ItemBaseController<UIImageView> else { return }
-        itemControllerDidLongPress(itemController, in: itemController.itemView)
+        if itemController.saveActionBlock != nil {
+            itemController.saveActionBlock?()
+        } else {
+            itemControllerDidLongPress(itemController, in: itemController.itemView)
+        }
     }
 
     //ThumbnailsimageBlock
@@ -701,7 +705,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             }
         }
         
-        moreButton.isHidden = !(controller is ImageViewController)
+        moreButton.isHidden = false// !(controller is ImageViewController)
     }
 
     open func itemControllerDidSingleTap(_ controller: ItemController) {
