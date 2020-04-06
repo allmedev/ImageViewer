@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 extension UIImageView: DisplaceableView {}
 
@@ -60,9 +61,11 @@ class ViewController: UIViewController {
                 galleryItem = GalleryItem.custom(fetchImageBlock: myFetchImageBlock, itemViewControllerBlock: itemViewControllerBlock)
 
             default:
-
+                
+                let permissonBlock: (@escaping (Bool)->Void) -> Void = Self.checkPhotosPermissions
+                
                 let image = imageView.image ?? UIImage(named: "0")!
-                galleryItem = GalleryItem.image { $0(image) }
+                galleryItem = GalleryItem.image(fetchImageBlock: { compl in compl(image) }, isPermissionGrantedBlock: permissonBlock)
             }
 
             items.append(DataItem(imageView: imageView, galleryItem: galleryItem))
@@ -149,6 +152,25 @@ class ViewController: UIViewController {
             GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
             GalleryConfigurationItem.displacementInsetMargin(50)
         ]
+    }
+    
+    static func checkPhotosPermissions(_ handler: ((Bool) -> Void)?) {
+        let status = PHPhotoLibrary.authorizationStatus()
+        switch status {
+        case .authorized:
+            handler?(true)
+        case .denied, .restricted:
+            handler?(false)
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { _ in
+                DispatchQueue.main.async {
+                    checkPhotosPermissions(handler)
+                }
+            }
+        @unknown default:
+            //Switch covers known cases, but 'PHAuthorizationStatus' may have additional unknown values, possibly added in future versions
+            assertionFailure("unhandled case in PHAuthorizationStatus")
+        }
     }
 }
 

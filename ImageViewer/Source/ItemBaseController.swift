@@ -23,6 +23,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, Save
     let scrollView = UIScrollView()
     let activityIndicatorView = UIActivityIndicatorView(style: .white)
     let saveActionBlock: (() -> Void)?
+    let isPermissionGrantedBlock: ((@escaping (Bool)->Void) -> Void)?
 
     //DELEGATE / DATASOURCE
     weak public var delegate:                 ItemControllerDelegate?
@@ -66,13 +67,20 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, Save
 
     // MARK: - Initializers
 
-    public init(index: Int, itemCount: Int, fetchImageBlock: @escaping FetchImageBlock, configuration: GalleryConfiguration, isInitialController: Bool = false, saveActionBlock: (() -> Void)? = nil) {
+    public init(index: Int,
+                itemCount: Int,
+                fetchImageBlock: @escaping FetchImageBlock,
+                configuration: GalleryConfiguration,
+                isInitialController: Bool = false,
+                saveActionBlock: (() -> Void)? = nil,
+                isPermissionGrantedBlock: ((@escaping (Bool)->Void) -> Void)? = nil) {
 
         self.index = index
         self.itemCount = itemCount
         self.isInitialController = isInitialController
         self.fetchImageBlock = fetchImageBlock
         self.saveActionBlock = saveActionBlock
+        self.isPermissionGrantedBlock = isPermissionGrantedBlock
 
         for item in configuration {
 

@@ -475,8 +475,16 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             return
         }
         if let itemController = vc as? ItemBaseController<UIImageView> {
-            itemControllerDidLongPress(itemController, in: itemController.itemView)
-            return
+            guard let permissionBlock = itemController.isPermissionGrantedBlock else {
+                assertionFailure()
+                itemControllerDidLongPress(itemController, in: itemController.itemView)
+                return
+            }
+            permissionBlock { [weak self] isGranted in
+                if isGranted {
+                    self?.itemControllerDidLongPress(itemController, in: itemController.itemView)
+                }
+            }
         }
     }
 
