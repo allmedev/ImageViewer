@@ -245,7 +245,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         moreButton.addTarget(self, action: #selector(GalleryViewController.moreAction), for: .touchUpInside)
         moreButton.alpha = 0
         self.view.addSubview(moreButton)
-        moreButton.isHidden = false //!(initialItemController is ImageViewController)
+        moreButton.isHidden = initialItemController is VideoViewController
     }
 
     fileprivate func configureScrubber() {
@@ -715,7 +715,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             }
         }
         
-        moreButton.isHidden = false// !(controller is ImageViewController)
+        moreButton.isHidden = controller is VideoViewController
     }
 
     open func itemControllerDidSingleTap(_ controller: ItemController) {
