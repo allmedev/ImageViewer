@@ -22,7 +22,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     fileprivate var thumbnailsButton: UIButton? = UIButton.thumbnailsButton()
     fileprivate var deleteButton: UIButton? = UIButton.deleteButton()
     fileprivate let scrubber = VideoScrubber()
-    fileprivate let moreButton = UIButton.moreButton()
+    fileprivate var moreButton: UIButton? = UIButton.moreButton()
 
     fileprivate weak var initialItemController: ItemController?
 
@@ -144,6 +144,15 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
                 case .custom(let button):   deleteButton = button
                 case .builtIn:              break
                 }
+                
+            case .moreButtonMode(let buttonMode):
+
+            switch buttonMode {
+
+            case .none:                 moreButton = nil
+            case .custom(let button):   moreButton = button
+            case .builtIn:              break
+            }
 
                 default: break
             }
@@ -242,6 +251,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     }
     
     fileprivate func configureMoreButton() {
+        guard let moreButton = moreButton else { return }
         moreButton.addTarget(self, action: #selector(GalleryViewController.moreAction), for: .touchUpInside)
         moreButton.alpha = 0
         self.view.addSubview(moreButton)
@@ -619,7 +629,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self?.closeButton?.alpha = 0.0
             self?.thumbnailsButton?.alpha = 0.0
             self?.deleteButton?.alpha = 0.0
-            self?.moreButton.alpha = 0.0
+            self?.moreButton?.alpha = 0.0
             self?.scrubber.alpha = 0.0
 
             }, completion: { [weak self] done in
@@ -664,7 +674,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             self?.closeButton?.alpha = targetAlpha
             self?.thumbnailsButton?.alpha = targetAlpha
             self?.deleteButton?.alpha = targetAlpha
-            self?.moreButton.alpha = targetAlpha
+            self?.moreButton?.alpha = targetAlpha
 
             if let _ = self?.viewControllers?.first as? VideoViewController {
 
@@ -715,7 +725,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             }
         }
         
-        moreButton.isHidden = controller is VideoViewController
+        moreButton?.isHidden = controller is VideoViewController
     }
 
     open func itemControllerDidSingleTap(_ controller: ItemController) {
@@ -750,7 +760,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             closeButton?.alpha = alpha
             thumbnailsButton?.alpha = alpha
             deleteButton?.alpha = alpha
-            moreButton.alpha = alpha
+            moreButton?.alpha = alpha
             headerView?.alpha = alpha
             footerView?.alpha = alpha
 
