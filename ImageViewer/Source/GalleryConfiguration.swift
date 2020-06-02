@@ -29,6 +29,8 @@ public enum GalleryConfigurationItem {
 
     ///Option to set the Delete button type.
     case deleteButtonMode(ButtonMode)
+    
+    case moreButtonMode(ButtonMode)
 
     /// Layout behaviour for the Close button.
     case closeLayout(ButtonLayout)
